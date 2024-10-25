@@ -1,12 +1,13 @@
+import { useAuth } from '@app/app/hooks'
+import { Layout } from '@app/view/layouts'
+import { DashBoard } from '@app/view/pages/dashboard'
+import { SignIn } from '@app/view/pages/signin'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { useAuth } from '../app/hooks'
-import { Layout } from '../view/layouts'
-import { SignIn } from '../view/pages/signin'
 
 export function Router() {
   const { signedIn } = useAuth()
 
-  if (!signedIn) return (
+  if (signedIn) return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SignIn/>} />
@@ -18,7 +19,7 @@ export function Router() {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<SignIn/>} />
+          <Route path="/" element={<DashBoard/>} />
         </Routes>
       </Layout>
     </BrowserRouter>
