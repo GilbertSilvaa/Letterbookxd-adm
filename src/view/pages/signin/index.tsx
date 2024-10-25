@@ -1,5 +1,5 @@
+import LogoImg from '@app/assets/logo.png'
 import { Button, Input } from '@nextui-org/react'
-import LogoImg from '../../../assets/logo.png'
 import { useSignInController } from './useSignInController'
 
 export function SignIn() {

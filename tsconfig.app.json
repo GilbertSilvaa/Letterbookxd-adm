@@ -18,7 +18,12 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": ".",  // Para garantir que o TypeScript saiba de onde começam os caminhos
+    "paths": {
+      "@app/*": ["src/*"]  // Mapeamento do alias
+    }
   },
   "include": ["src"]
 }
