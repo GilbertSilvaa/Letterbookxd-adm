@@ -1,6 +1,6 @@
 import Logo from '@app/assets/logo.png'
 import { ReactNode } from 'react'
-import { FaCheckCircle, FaUserCircle } from 'react-icons/fa'
+import { FaCheckCircle, FaRegUserCircle, FaSignOutAlt, FaUserCircle } from 'react-icons/fa'
 import { MdDashboard } from 'react-icons/md'
 import { TbMessageReportFilled } from 'react-icons/tb'
 import { Link, useLocation } from 'react-router-dom'
@@ -21,7 +21,7 @@ export function Layout({ children }: TLayoutProps) {
 
   return (
     <div className="flex">
-      <aside className="w-[280px] h-[100vh] bg-[#181818] flex flex-col items-center">
+      <aside className="w-[280px] h-[100vh] bg-[#18181a] flex flex-col items-center">
         <img src={Logo} alt="logo" className="w-[90%]" />
 
         <ul className="mt-5 w-full px-4 flex flex-col gap-4 text-[#eee]">
@@ -34,10 +34,26 @@ export function Layout({ children }: TLayoutProps) {
             </Link>
           ))}
         </ul>
+
+        <div className="w-full p-4 flex-1 flex flex-col justify-end">
+          <Link to="" className="flex items-center gap-3 font-semibold p-3 rounded transition-all hover:bg-[#333]">
+            <FaSignOutAlt/>
+            Sair
+          </Link>
+        </div>
       </aside>
       
-      <main className="flex-1 p-6">
-        { children }
+      <main className="flex-1 flex flex-col">
+        <aside className="w-full h-[3rem] bg-[#18181a] flex justify-end">
+          <div className="flex items-center gap-2 px-5">
+            <FaRegUserCircle />
+            <span className="font-normal">administrador</span>
+          </div>
+        </aside>
+        
+        <div className="p-6 flex-1">
+          { children }
+        </div>
       </main>
     </div>
   )
