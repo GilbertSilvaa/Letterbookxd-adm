@@ -1,11 +1,19 @@
+import { useAuth } from '@app/app/hooks'
+import { userService } from '@app/app/services/userService'
 import { FormEvent, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 export function useSignInController() {
+  const navigate = useNavigate()
+
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   })
+
+  const { signIn } = useAuth()
 
   const setFormValue = (
     field: keyof typeof formData,
@@ -15,7 +23,24 @@ export function useSignInController() {
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     setIsLoading(true)
-    console.table(formData)
+    
+    try {
+      const { error, value, message } = await userService.auth(formData)
+      
+      if (error) {
+        toast.error(message)
+        return
+      }
+
+      signIn(value.token)
+      navigate('/')
+    }
+    catch {
+      toast.error('email ou senha incorreta')
+    }
+    finally {
+      setIsLoading(false)
+    }
   }
 
   return {

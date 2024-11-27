@@ -9,7 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 export function Router() {
   const { signedIn } = useAuth()
 
-  if (signedIn) return (
+  if (!signedIn) return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SignIn/>} />

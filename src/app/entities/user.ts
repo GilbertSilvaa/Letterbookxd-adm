@@ -1,20 +1,23 @@
 type TUserParams = {
   id: number,
   name: string,
+  nickname: string,
   email: string,
-  role: 'admin' | 'moderator',
+  privilege: 'ADM' | 'moderator',
 }
 
 export class User {
   id: number
   name: string
+  nickname: string
   email: string
-  role: 'admin' | 'moderator'
+  privilege: 'ADM' | 'moderator'
 
-  constructor({ id, name, email, role }: TUserParams) {
+  constructor({ id, name, nickname, email, privilege }: TUserParams) {
     this.id = id
     this.name = name
     this.email = email
-    this.role = role
+    this.nickname = nickname
+    this.privilege = privilege
   }
 }
