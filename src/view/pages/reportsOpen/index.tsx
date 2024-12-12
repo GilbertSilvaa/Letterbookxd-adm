@@ -13,13 +13,14 @@ const COLLUNS = [
   ''
 ]
 
-const FILTERS = [
-  '#',
-  'usuário'
-]
+const FILTERS = ['#', 'usuário']
 
 export function ReportsOpen() {
-  const { isOpenReportModal, setIsOpenReportModal } = useReportsOpenController()
+  const { 
+    isOpenReportModal, 
+    setIsOpenReportModal,
+    reportOpenList
+  } = useReportsOpenController()
 
   return (
     <div>
@@ -52,54 +53,22 @@ export function ReportsOpen() {
         </TableHeader>
 
         <TableBody>
-        <TableRow key="1">
-          <TableCell>09090</TableCell>
-          <TableCell>Tony Reichert</TableCell>
-          <TableCell>CEO</TableCell>
-          <TableCell>Fall Hart</TableCell>
-          <TableCell>12/10/2024</TableCell>
-          <TableCell>
-            <button className="text-[1rem]" onClick={() => setIsOpenReportModal(true)}>
-              <LuSearchCheck/>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow key="2">
-          <TableCell>09090</TableCell>
-          <TableCell>Zoey Lang</TableCell>
-          <TableCell>Technical Lead</TableCell>
-          <TableCell>Fall Hart</TableCell>
-          <TableCell>12/10/2024</TableCell>
-          <TableCell>
-            <button className="text-[1rem]" onClick={() => setIsOpenReportModal(true)}>
-              <LuSearchCheck/>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow key="3">
-          <TableCell>09090</TableCell>
-          <TableCell>Jane Fisher</TableCell>
-          <TableCell>Senior Developer</TableCell>
-          <TableCell>Fall Hart</TableCell>
-          <TableCell>12/10/2024</TableCell>
-          <TableCell>
-            <button className="text-[1rem]" onClick={() => setIsOpenReportModal(true)}>
-              <LuSearchCheck/>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow key="4">
-          <TableCell>09090</TableCell>
-          <TableCell>William Howard</TableCell>
-          <TableCell>Community Manager</TableCell>
-          <TableCell>Fall Hart</TableCell>
-          <TableCell>12/10/2024</TableCell>
-          <TableCell>
-            <button className="text-[1rem]" onClick={() => setIsOpenReportModal(true)}>
-              <LuSearchCheck/>
-            </button>
-          </TableCell>
-        </TableRow>
+          {reportOpenList.map((report, index) => (
+            <TableRow key={index}>
+              <TableCell>{report.id}</TableCell>
+              <TableCell>{report.user.nickname}</TableCell>
+              <TableCell className="max-w-[300px]">
+                <span className="line-clamp-2">{report.reason}</span> 
+              </TableCell>
+              <TableCell>{report.review.user.nickname}</TableCell>
+              <TableCell>{new Date(report.creationDate).toLocaleDateString()}</TableCell>
+              <TableCell>
+                <button className="text-[1rem]" onClick={() => setIsOpenReportModal(true)}>
+                  <LuSearchCheck/>
+                </button>
+              </TableCell>
+            </TableRow>
+          ))}
       </TableBody>
       </Table>
 

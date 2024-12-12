@@ -11,6 +11,7 @@ type TAuthValue = {
   token: string
   user: User | undefined
 }
+
 type TAuthResponse = TResponseAPI<TAuthValue>
 
 export async function auth(params: TAuthParams) {
