@@ -17,9 +17,11 @@ const FILTERS = ['#', 'usuário']
 
 export function ReportsOpen() {
   const { 
-    isOpenReportModal, 
+    isOpenReportModal,
     setIsOpenReportModal,
-    reportOpenList
+    reportOpenList,
+    reportSelected,
+    handleSelectReport
   } = useReportsOpenController()
 
   return (
@@ -58,12 +60,12 @@ export function ReportsOpen() {
               <TableCell>{report.id}</TableCell>
               <TableCell>{report.user.nickname}</TableCell>
               <TableCell className="max-w-[300px]">
-                <span className="line-clamp-2">{report.reason}</span> 
+                <span className="line-clamp-1">{report.reason}</span> 
               </TableCell>
               <TableCell>{report.review.user.nickname}</TableCell>
               <TableCell>{new Date(report.creationDate).toLocaleDateString()}</TableCell>
               <TableCell>
-                <button className="text-[1rem]" onClick={() => setIsOpenReportModal(true)}>
+                <button className="text-[1rem]" onClick={() => handleSelectReport(report)}>
                   <LuSearchCheck/>
                 </button>
               </TableCell>
@@ -73,6 +75,7 @@ export function ReportsOpen() {
       </Table>
 
       <ReportModal 
+        data={reportSelected}
         isOpen={isOpenReportModal} 
         onClose={() => setIsOpenReportModal(false)}/>
     </div>

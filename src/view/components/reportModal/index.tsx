@@ -1,3 +1,4 @@
+import { Report } from '@app/app/entities'
 import {
   Button,
   Modal,
@@ -8,14 +9,15 @@ import {
 } from '@nextui-org/react'
 
 type TReportModalProps = {
+  data?: Report
   isOpen: boolean,
   onClose: () => void
 }
 
-export function ReportModal({ isOpen, onClose }: TReportModalProps) {
+export function ReportModal({ data, isOpen, onClose }: TReportModalProps) {
   return (
     <Modal 
-      size="xl"
+      size="2xl"
       backdrop="opaque" 
       isOpen={isOpen} 
       onOpenChange={onClose}
@@ -27,25 +29,28 @@ export function ReportModal({ isOpen, onClose }: TReportModalProps) {
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1"># { data?.id }</ModalHeader>
             <ModalBody>
-              <p> 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Nullam pulvinar risus non risus hendrerit venenatis.
-                Pellentesque sit amet hendrerit risus, sed porttitor quam.
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Nullam pulvinar risus non risus hendrerit venenatis.
-                Pellentesque sit amet hendrerit risus, sed porttitor quam.
-              </p>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <strong>Denúncia (@{data?.user.nickname}): </strong>
+                  <p className="ml-3 text-[#bbb]">{ data?.reason }</p>
+                </div>
+                
+                <div className="flex flex-col gap-2">
+                  <strong>Comentário (@{data?.review.user.nickname}): </strong>
+                  <p className="ml-3 text-[#bbb]">{ data?.originalComment }</p>
+                </div>
+
+                <span className="text-[#ddd]">criada em {new Date(data?.creationDate!).toLocaleDateString()}</span>
+              </div>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
-                Close
+              <Button color="default" variant="flat" onPress={onClose}>
+                Rejeitar
               </Button>
               <Button color="primary" onPress={onClose}>
-                Action
+                Aceitar
               </Button>
             </ModalFooter>
           </>

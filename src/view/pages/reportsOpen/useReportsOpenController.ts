@@ -7,6 +7,7 @@ export function useReportsOpenController() {
   const [isLoading, setIsLoading] = useState(false)
   const [isOpenReportModal, setIsOpenReportModal] = useState(false)
   const [reportOpenList, setReportOpenList] = useState<Report[]>([])
+  const [reportSelected, setReportSelected] = useState<Report>()
 
   async function getReportsOpen() {
     setIsLoading(true)
@@ -30,14 +31,21 @@ export function useReportsOpenController() {
     }
   }
 
+  function handleSelectReport(report: Report) {
+    setReportSelected(report)
+    setIsOpenReportModal(true)
+  }
+
   useEffect(() => {
     getReportsOpen()
   }, [])
 
   return {
     isLoading,
+    handleSelectReport,
     setIsOpenReportModal,
     isOpenReportModal,
-    reportOpenList
+    reportOpenList,
+    reportSelected
   }
 }
