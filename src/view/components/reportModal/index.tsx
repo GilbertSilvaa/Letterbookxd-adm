@@ -7,6 +7,8 @@ import {
   ModalFooter,
   ModalHeader
 } from '@nextui-org/react'
+import { useReportModalController } from './useReportModalController'
+import { EReportStatus } from '@app/app/enums'
 
 type TReportModalProps = {
   data?: Report
@@ -15,6 +17,11 @@ type TReportModalProps = {
 }
 
 export function ReportModal({ data, isOpen, onClose }: TReportModalProps) {
+  const { 
+    onSubmit,
+    isSubmitLoading
+  } = useReportModalController({ onCloseCallback: onClose })
+
   return (
     <Modal 
       size="2xl"
@@ -27,7 +34,7 @@ export function ReportModal({ data, isOpen, onClose }: TReportModalProps) {
       }}
     >
       <ModalContent>
-        {(onClose) => (
+        {() => (
           <>
             <ModalHeader className="flex flex-col gap-1"># { data?.id }</ModalHeader>
             <ModalBody>
@@ -42,14 +49,21 @@ export function ReportModal({ data, isOpen, onClose }: TReportModalProps) {
                   <p className="ml-3 text-[#bbb]">{ data?.originalComment }</p>
                 </div>
 
-                <span className="text-[#ddd]">criada em {new Date(data?.creationDate!).toLocaleDateString()}</span>
+                <span className="text-[#bbb] ml-3">criada em {new Date(data?.creationDate!).toLocaleDateString()}</span>
               </div>
             </ModalBody>
             <ModalFooter>
-              <Button color="default" variant="flat" onPress={onClose}>
+              <Button 
+                color="default" 
+                variant="flat" 
+                isLoading={isSubmitLoading}
+                onPress={() => onSubmit({ reportId: data?.id!, status: EReportStatus.DENIED })}>
                 Rejeitar
               </Button>
-              <Button color="primary" onPress={onClose}>
+              <Button 
+                color="primary" 
+                isLoading={isSubmitLoading}
+                onPress={() => onSubmit({ reportId: data?.id!, status: EReportStatus.ACCEPTED })}>
                 Aceitar
               </Button>
             </ModalFooter>

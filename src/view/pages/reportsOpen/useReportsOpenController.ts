@@ -16,7 +16,7 @@ export function useReportsOpenController() {
       const { error, value, message } = await reportService.getOpened({ 
         page: 0, 
         pageSize: 10, 
-        sort: 'desc' 
+        sort: 'asc' 
       })
 
       if (error) {
