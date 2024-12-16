@@ -14,13 +14,14 @@ type TReportModalProps = {
   data?: Report
   isOpen: boolean,
   onClose: () => void
+  onResolved: (id: number) => void
 }
 
-export function ReportModal({ data, isOpen, onClose }: TReportModalProps) {
+export function ReportModal({ data, isOpen, onClose, onResolved }: TReportModalProps) {
   const { 
     onSubmit,
     isSubmitLoading
-  } = useReportModalController({ onCloseCallback: onClose })
+  } = useReportModalController({ onClose, onResolved })
 
   return (
     <Modal 

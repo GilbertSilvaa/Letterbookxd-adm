@@ -9,19 +9,20 @@ type TSubmitParams = {
 }
 
 type TUseReportModalControllerParams = {
-  onCloseCallback: () => void
+  onClose: () => void
+  onResolved: (id: number) => void
 }
 
-export function useReportModalController({ onCloseCallback }: TUseReportModalControllerParams) {
+export function useReportModalController({ onClose, onResolved }: TUseReportModalControllerParams) {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false)
   
   async function onSubmit(params: TSubmitParams) {
     try {
       setIsSubmitLoading(true)
-      const { value } = await reportService.handle(params)
-      onCloseCallback()
+      await reportService.handle(params)
       toast.success('Denúncia tratada com sucesso')
-      console.log(value)
+      onResolved(params.reportId)
+      onClose()
     }
     catch {
       toast.error('Ops! Houve um erro')

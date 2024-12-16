@@ -1,7 +1,7 @@
-import { Report } from '@app/app/entities'
-import { reportService } from '@app/app/services/reportService'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { Report } from '@app/app/entities'
+import { reportService } from '@app/app/services/reportService'
 
 export function useReportsOpenController() {
   const [isLoading, setIsLoading] = useState(false)
@@ -35,6 +35,11 @@ export function useReportsOpenController() {
     setReportSelected(report)
     setIsOpenReportModal(true)
   }
+  
+  function handleReportResolved(reportId: number) {
+    console.debug(reportId)
+    getReportsOpen()
+  }
 
   useEffect(() => {
     getReportsOpen()
@@ -46,6 +51,7 @@ export function useReportsOpenController() {
     setIsOpenReportModal,
     isOpenReportModal,
     reportOpenList,
-    reportSelected
+    reportSelected,
+    handleReportResolved
   }
 }

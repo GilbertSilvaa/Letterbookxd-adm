@@ -21,7 +21,8 @@ export function ReportsOpen() {
     setIsOpenReportModal,
     reportOpenList,
     reportSelected,
-    handleSelectReport
+    handleSelectReport,
+    handleReportResolved
   } = useReportsOpenController()
 
   return (
@@ -77,6 +78,7 @@ export function ReportsOpen() {
       <ReportModal 
         data={reportSelected}
         isOpen={isOpenReportModal} 
+        onResolved={handleReportResolved}
         onClose={() => setIsOpenReportModal(false)}/>
     </div>
   )
