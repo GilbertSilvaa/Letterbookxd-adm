@@ -3,20 +3,19 @@ import toast from 'react-hot-toast'
 import { Report } from '@app/app/entities'
 import { reportService } from '@app/app/services/reportService'
 
-export function useReportsOpenController() {
+export function useReportsCloseController() {
   const [isLoading, setIsLoading] = useState(false)
   const [isOpenReportModal, setIsOpenReportModal] = useState(false)
-  const [reportOpenList, setReportOpenList] = useState<Report[]>([])
+  const [reportClosedList, setReportClosedList] = useState<Report[]>([])
   const [reportSelected, setReportSelected] = useState<Report>()
 
-  async function getReportsOpen() {
+  async function getReportsClosed() {
     try {
       setIsLoading(true)
-      
-      const { error, value, message } = await reportService.getOpened({ 
-        page: 0, 
-        pageSize: 15, 
-        sort: 'asc' 
+
+      const { error, value, message } = await reportService.getClosed({
+        page: 0,
+        pageSize: 15
       })
 
       if (error) {
@@ -24,7 +23,7 @@ export function useReportsOpenController() {
         return
       }
 
-      setReportOpenList(value.rows)
+      setReportClosedList(value.rows)
     }
     finally {
       setIsLoading(false)
@@ -35,23 +34,17 @@ export function useReportsOpenController() {
     setReportSelected(report)
     setIsOpenReportModal(true)
   }
-  
-  function handleReportResolved(reportId: number) {
-    console.debug(reportId)
-    getReportsOpen()
-  }
 
   useEffect(() => {
-    getReportsOpen()
+    getReportsClosed()
   }, [])
 
   return {
     isLoading,
-    handleSelectReport,
+    reportClosedList,
     setIsOpenReportModal,
     isOpenReportModal,
-    reportOpenList,
     reportSelected,
-    handleReportResolved
+    handleSelectReport
   }
 }

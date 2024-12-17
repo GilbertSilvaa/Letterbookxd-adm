@@ -1,7 +1,18 @@
-import { ReportModal } from '@app/view/components/reportModal'
-import { Input, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
 import { FaSearch } from 'react-icons/fa'
 import { LuSearchCheck } from 'react-icons/lu'
+import {
+  Input,
+  Select,
+  SelectItem,
+  Spinner,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow
+} from '@nextui-org/react'
+import { ReportOpenModal } from '@app/view/components/reportOpenModal'
 import { useReportsOpenController } from './useReportsOpenController'
 
 const COLLUNS = [
@@ -16,7 +27,8 @@ const COLLUNS = [
 const FILTERS = ['#', 'usuário']
 
 export function ReportsOpen() {
-  const { 
+  const {
+    isLoading,
     isOpenReportModal,
     setIsOpenReportModal,
     reportOpenList,
@@ -33,8 +45,7 @@ export function ReportsOpen() {
         <Select
           className="w-full sm:w-[10%]"
           disableSelectorIconRotation
-          defaultSelectedKeys={"0"}
-        >
+          defaultSelectedKeys={"0"}>
           {FILTERS.map((filter, index) => (
             <SelectItem key={index}>
               {filter}
@@ -46,8 +57,7 @@ export function ReportsOpen() {
           isClearable
           className="w-full sm:max-w-[30%]"
           placeholder="Digite aqui..."
-          startContent={<FaSearch />}
-        />
+          startContent={<FaSearch />} />
       </div>
 
       <Table>
@@ -55,31 +65,34 @@ export function ReportsOpen() {
           {COLLUNS.map((coll, index) => <TableColumn key={index}>{coll}</TableColumn>)}
         </TableHeader>
 
-        <TableBody>
+        <TableBody
+          emptyContent="Sem registros"
+          isLoading={isLoading}
+          loadingContent={<Spinner label="Carregando..." />}>
           {reportOpenList.map((report, index) => (
             <TableRow key={index}>
               <TableCell>{report.id}</TableCell>
               <TableCell>{report.user.nickname}</TableCell>
               <TableCell className="max-w-[300px]">
-                <span className="line-clamp-1">{report.reason}</span> 
+                <span className="line-clamp-1">{report.reason}</span>
               </TableCell>
               <TableCell>{report.review.user.nickname}</TableCell>
               <TableCell>{new Date(report.creationDate).toLocaleDateString()}</TableCell>
               <TableCell>
                 <button className="text-[1rem]" onClick={() => handleSelectReport(report)}>
-                  <LuSearchCheck/>
+                  <LuSearchCheck />
                 </button>
               </TableCell>
             </TableRow>
           ))}
-      </TableBody>
+        </TableBody>
       </Table>
 
-      <ReportModal 
+      <ReportOpenModal
         data={reportSelected}
-        isOpen={isOpenReportModal} 
+        isOpen={isOpenReportModal}
         onResolved={handleReportResolved}
-        onClose={() => setIsOpenReportModal(false)}/>
+        onClose={() => setIsOpenReportModal(false)} />
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import { EReportStatus } from '../enums'
 import { Review } from './review'
 import { User } from './user'
 
@@ -9,10 +10,12 @@ type TReportParams = {
   userId: number
   moderatorId?: number  
   reviewType: 'BOOK' | 'BOOKLIST'
-  status: 'OPENED' | 'CLOSED'
+  status: EReportStatus
   creationDate: string
+  updateDate: string
   review: Review
   user: User
+  moderator?: User
 }
 
 export class Report {
@@ -23,10 +26,12 @@ export class Report {
   userId: number
   moderatorId?: number  
   reviewType: 'BOOK' | 'BOOKLIST'
-  status: 'OPENED' | 'CLOSED'
+  status: EReportStatus
   creationDate: string
+  updateDate: string
   review: Review
   user: User
+  moderator?: User
 
   constructor(params: TReportParams) {
     this.id = params.id
@@ -37,7 +42,9 @@ export class Report {
     this.reviewType = params.reviewType
     this.status = params.status
     this.creationDate = params.creationDate
+    this.updateDate = params.updateDate
     this.review = params.review
     this.user = params.user
+    this.moderator = params.moderator
   }
 }
