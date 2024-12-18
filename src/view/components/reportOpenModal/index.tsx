@@ -7,7 +7,7 @@ import {
   ModalFooter,
   ModalHeader
 } from '@nextui-org/react'
-import { useReportModalController } from './useReportModalController'
+import { useReportOpenModalController } from './useReportOpenModalController'
 import { EReportStatus } from '@app/app/enums'
 
 type TReportOpenModalProps = {
@@ -18,7 +18,7 @@ type TReportOpenModalProps = {
 }
 
 export function ReportOpenModal({ data, isOpen, onClose, onResolved }: TReportOpenModalProps) {
-  const { onSubmit, isSubmitLoading } = useReportModalController({ onClose, onResolved })
+  const { onSubmit, isSubmitLoading } = useReportOpenModalController({ onClose, onResolved })
 
   return (
     <Modal
@@ -32,7 +32,7 @@ export function ReportOpenModal({ data, isOpen, onClose, onResolved }: TReportOp
       }}>
       <ModalContent>
         <>
-          <ModalHeader className="flex flex-col gap-1"># {data?.id}</ModalHeader>
+          <ModalHeader># {data?.id}</ModalHeader>
           <ModalBody>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">

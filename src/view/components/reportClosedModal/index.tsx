@@ -1,4 +1,5 @@
 import { Report } from '@app/app/entities'
+import { EReportStatus } from '@app/app/enums'
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react'
 
 type TReportClosedModalProps = {
@@ -20,7 +21,10 @@ export function ReportClosedModal({ data, isOpen, onClose }: TReportClosedModalP
       }}>
       <ModalContent>
         <>
-          <ModalHeader className="flex flex-col gap-1"># {data?.id}</ModalHeader>
+          <ModalHeader className="flex items-center gap-3">
+            <span># {data?.id}</span>
+            <div className={`w-[18px] h-[18px] rounded-full ${data?.status === EReportStatus.DENIED ? 'bg-red-500' : 'bg-green-500' }`}></div>
+          </ModalHeader>
           <ModalBody>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
@@ -37,9 +41,11 @@ export function ReportClosedModal({ data, isOpen, onClose }: TReportClosedModalP
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary">
-              Aceitar
-            </Button>
+            {data?.status === EReportStatus.ACCEPTED && 
+              <Button color="primary">
+                Rejeitar
+              </Button>
+            }
           </ModalFooter>
         </>
       </ModalContent>

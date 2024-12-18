@@ -13,7 +13,7 @@ type TUseReportModalControllerParams = {
   onResolved: (id: number) => void
 }
 
-export function useReportModalController({ onClose, onResolved }: TUseReportModalControllerParams) {
+export function useReportOpenModalController({ onClose, onResolved }: TUseReportModalControllerParams) {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false)
   
   async function onSubmit(params: TSubmitParams) {

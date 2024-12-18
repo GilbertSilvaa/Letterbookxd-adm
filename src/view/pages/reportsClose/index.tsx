@@ -76,8 +76,8 @@ export function ReportsClose() {
               <TableCell>{report.review.user.nickname}</TableCell>
               <TableCell>
                 {report.status === EReportStatus.ACCEPTED 
-                  ? <span className="py-1 px-2 rounded-lg bg-green-700 font-semibold">ACEITO</span>
-                  : <span className="py-1 px-2 rounded-lg bg-red-700 font-semibold">REJEITADO</span>
+                  ? <span className="py-1 px-2 rounded-lg bg-green-700 font-semibold text-[12px]">ACEITO</span>
+                  : <span className="py-1 px-2 rounded-lg bg-red-700 font-semibold text-[12px]">REJEITADO</span>
                 }
               </TableCell>
               <TableCell>{report.moderator?.nickname}</TableCell>
