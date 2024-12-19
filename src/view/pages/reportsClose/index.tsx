@@ -36,7 +36,8 @@ export function ReportsClose() {
     setIsOpenReportModal,
     reportClosedList,
     reportSelected,
-    handleSelectReport
+    handleSelectReport,
+    handleReportResolved
   } = useReportsCloseController()
 
   return (
@@ -75,7 +76,7 @@ export function ReportsClose() {
               </TableCell>
               <TableCell>{report.review.user.nickname}</TableCell>
               <TableCell>
-                {report.status === EReportStatus.ACCEPTED 
+                {report.status === EReportStatus.ACCEPTED
                   ? <span className="py-1 px-2 rounded-lg bg-green-700 font-semibold text-[12px]">ACEITO</span>
                   : <span className="py-1 px-2 rounded-lg bg-red-700 font-semibold text-[12px]">REJEITADO</span>
                 }
@@ -93,6 +94,7 @@ export function ReportsClose() {
       </Table>
 
       <ReportClosedModal
+        onResolved={handleReportResolved}
         data={reportSelected}
         isOpen={isOpenReportModal}
         onClose={() => setIsOpenReportModal(false)} />

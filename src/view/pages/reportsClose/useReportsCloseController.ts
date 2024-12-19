@@ -35,6 +35,11 @@ export function useReportsCloseController() {
     setIsOpenReportModal(true)
   }
 
+  function handleReportResolved(reportId: number) {
+    console.debug(reportId)
+    getReportsClosed()
+  }
+
   useEffect(() => {
     getReportsClosed()
   }, [])
@@ -45,6 +50,7 @@ export function useReportsCloseController() {
     setIsOpenReportModal,
     isOpenReportModal,
     reportSelected,
-    handleSelectReport
+    handleSelectReport,
+    handleReportResolved
   }
 }

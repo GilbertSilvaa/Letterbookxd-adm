@@ -1,14 +1,21 @@
 import { Report } from '@app/app/entities'
 import { EReportStatus } from '@app/app/enums'
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react'
+import { useReportClosedModalController } from './useReportClosedModalController'
 
 type TReportClosedModalProps = {
   data?: Report
   isOpen: boolean,
-  onClose: () => void
+  onClose: () => void,
+  onResolved: (id: number) => void
 }
 
-export function ReportClosedModal({ data, isOpen, onClose }: TReportClosedModalProps) {
+export function ReportClosedModal({ data, isOpen, onClose, onResolved }: TReportClosedModalProps) {
+  const { 
+    isSubmitLoading, 
+    unbanSubmit 
+  } = useReportClosedModalController({ onClose, onResolved })
+
   return (
     <Modal
       size="2xl"
@@ -42,7 +49,10 @@ export function ReportClosedModal({ data, isOpen, onClose }: TReportClosedModalP
           </ModalBody>
           <ModalFooter>
             {data?.status === EReportStatus.ACCEPTED && 
-              <Button color="primary">
+              <Button 
+                color="primary" 
+                isLoading={isSubmitLoading}
+                onClick={() => unbanSubmit(data.id)}>
                 Rejeitar
               </Button>
             }
