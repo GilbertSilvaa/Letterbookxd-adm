@@ -2,6 +2,7 @@ import { FaSearch } from 'react-icons/fa'
 import { LuSearchCheck } from 'react-icons/lu'
 import {
   Input,
+  Pagination,
   Select,
   SelectItem,
   Spinner,
@@ -34,7 +35,9 @@ export function ReportsOpen() {
     reportOpenList,
     reportSelected,
     handleSelectReport,
-    handleReportResolved
+    handleReportResolved,
+    pageCount,
+    setCurrentPage
   } = useReportsOpenController()
 
   return (
@@ -87,6 +90,16 @@ export function ReportsOpen() {
           ))}
         </TableBody>
       </Table>
+
+      {pageCount > 1 &&
+        <div className="flex justify-center items-center mt-2">
+          <Pagination
+            isCompact
+            initialPage={1}
+            total={pageCount}
+            onChange={page => setCurrentPage(page - 1)} />
+        </div>
+      }
 
       <ReportOpenModal
         data={reportSelected}

@@ -12,6 +12,8 @@ export function useReportClosedModalController({ onClose, onResolved }: TUseRepo
 
   async function unbanSubmit(reportId: number) {
     try {
+      if (!confirm('Confirmar ação?')) return
+
       setIsSubmitLoading(true)
       await reportService.unban({ reportId })
       toast.success('Denúncia desbanida com sucesso')

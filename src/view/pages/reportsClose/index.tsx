@@ -2,6 +2,7 @@ import { FaSearch } from 'react-icons/fa'
 import { LuSearchCheck } from 'react-icons/lu'
 import {
   Input,
+  Pagination,
   Select,
   SelectItem,
   Spinner,
@@ -37,7 +38,9 @@ export function ReportsClose() {
     reportClosedList,
     reportSelected,
     handleSelectReport,
-    handleReportResolved
+    handleReportResolved,
+    pageCount,
+    setCurrentPage
   } = useReportsCloseController()
 
   return (
@@ -92,6 +95,16 @@ export function ReportsClose() {
           ))}
         </TableBody>
       </Table>
+
+      {pageCount > 1 &&
+        <div className="flex justify-center items-center mt-2">
+          <Pagination
+            isCompact
+            initialPage={1}
+            total={pageCount}
+            onChange={page => setCurrentPage(page - 1)} />
+        </div>
+      }
 
       <ReportClosedModal
         onResolved={handleReportResolved}

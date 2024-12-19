@@ -1,9 +1,10 @@
-import Logo from '@app/assets/logo.png'
 import { ReactNode } from 'react'
 import { FaCheckCircle, FaRegUserCircle, FaSignOutAlt, FaUserCircle } from 'react-icons/fa'
 import { MdDashboard } from 'react-icons/md'
 import { TbMessageReportFilled } from 'react-icons/tb'
 import { Link, useLocation } from 'react-router-dom'
+import { useAuth } from '@app/app/hooks'
+import Logo from '@app/assets/logo.png'
 
 type TLayoutProps = {
   children: ReactNode
@@ -18,6 +19,8 @@ const MENU_ITEMS = [
 
 export function Layout({ children }: TLayoutProps) {
   const location = useLocation()
+
+  const { user } = useAuth()
 
   return (
     <div className="flex">
@@ -45,9 +48,9 @@ export function Layout({ children }: TLayoutProps) {
       
       <main className="flex-1 flex flex-col">
         <aside className="w-full h-[3rem] bg-[#18181a] flex justify-end">
-          <div className="flex items-center gap-2 px-5">
+          <div className="flex items-center gap-2 px-5 mr-4">
             <FaRegUserCircle />
-            <span className="font-normal">administrador</span>
+            <span className="font-normal">{user?.nickname}</span>
           </div>
         </aside>
         

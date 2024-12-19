@@ -11,9 +11,9 @@ type TReportClosedModalProps = {
 }
 
 export function ReportClosedModal({ data, isOpen, onClose, onResolved }: TReportClosedModalProps) {
-  const { 
-    isSubmitLoading, 
-    unbanSubmit 
+  const {
+    isSubmitLoading,
+    unbanSubmit
   } = useReportClosedModalController({ onClose, onResolved })
 
   return (
@@ -28,10 +28,7 @@ export function ReportClosedModal({ data, isOpen, onClose, onResolved }: TReport
       }}>
       <ModalContent>
         <>
-          <ModalHeader className="flex items-center gap-3">
-            <span># {data?.id}</span>
-            <div className={`w-[18px] h-[18px] rounded-full ${data?.status === EReportStatus.DENIED ? 'bg-red-500' : 'bg-green-500' }`}></div>
-          </ModalHeader>
+          <ModalHeader className="flex items-center gap-3"># {data?.id}</ModalHeader>
           <ModalBody>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
@@ -44,13 +41,21 @@ export function ReportClosedModal({ data, isOpen, onClose, onResolved }: TReport
                 <p className="ml-3 text-[#bbb]">{data?.originalComment}</p>
               </div>
 
-              <span className="text-[#bbb] ml-3">criada em {new Date(data?.creationDate!).toLocaleDateString()}</span>
+              <div className="flex gap-2">
+                <strong>Status: </strong>
+                {data?.status === EReportStatus.ACCEPTED
+                  ? <span className="p-1 rounded-lg bg-green-700 font-semibold text-[12px]">ACEITO</span>
+                  : <span className="p-1 rounded-lg bg-red-700 font-semibold text-[12px]">REJEITADO</span>
+                }
+              </div>
+
+              <span className="text-[#bbb] mt-1">resolvida por @{data?.moderator?.nickname} em {new Date(data?.updateDate!).toLocaleDateString()}</span>
             </div>
           </ModalBody>
           <ModalFooter>
-            {data?.status === EReportStatus.ACCEPTED && 
-              <Button 
-                color="primary" 
+            {data?.status === EReportStatus.ACCEPTED &&
+              <Button
+                color="primary"
                 isLoading={isSubmitLoading}
                 onClick={() => unbanSubmit(data.id)}>
                 Rejeitar

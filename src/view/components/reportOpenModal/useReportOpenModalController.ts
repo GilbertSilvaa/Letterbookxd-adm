@@ -18,6 +18,8 @@ export function useReportOpenModalController({ onClose, onResolved }: TUseReport
   
   async function onSubmit(params: TSubmitParams) {
     try {
+      if (!confirm('Confirmar ação?')) return
+
       setIsSubmitLoading(true)
       await reportService.handle(params)
       toast.success('Denúncia tratada com sucesso')

@@ -4,18 +4,22 @@ import { Report } from '@app/app/entities'
 import { reportService } from '@app/app/services/reportService'
 
 export function useReportsCloseController() {
+  const PAGESIZE = 15
+
   const [isLoading, setIsLoading] = useState(false)
   const [isOpenReportModal, setIsOpenReportModal] = useState(false)
   const [reportClosedList, setReportClosedList] = useState<Report[]>([])
   const [reportSelected, setReportSelected] = useState<Report>()
+  const [pageCount, setPageCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0)
 
   async function getReportsClosed() {
     try {
       setIsLoading(true)
 
       const { error, value, message } = await reportService.getClosed({
-        page: 0,
-        pageSize: 15
+        page: currentPage,
+        pageSize: PAGESIZE
       })
 
       if (error) {
@@ -24,6 +28,7 @@ export function useReportsCloseController() {
       }
 
       setReportClosedList(value.rows)
+      setPageCount(Math.ceil(value.count / PAGESIZE))
     }
     finally {
       setIsLoading(false)
@@ -42,7 +47,7 @@ export function useReportsCloseController() {
 
   useEffect(() => {
     getReportsClosed()
-  }, [])
+  }, [currentPage])
 
   return {
     isLoading,
@@ -51,6 +56,9 @@ export function useReportsCloseController() {
     isOpenReportModal,
     reportSelected,
     handleSelectReport,
-    handleReportResolved
+    handleReportResolved,
+    currentPage,
+    setCurrentPage,
+    pageCount
   }
 }

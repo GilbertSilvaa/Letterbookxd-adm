@@ -4,10 +4,14 @@ import { Report } from '@app/app/entities'
 import { reportService } from '@app/app/services/reportService'
 
 export function useReportsOpenController() {
+  const PAGESIZE = 15
+
   const [isLoading, setIsLoading] = useState(false)
   const [isOpenReportModal, setIsOpenReportModal] = useState(false)
   const [reportOpenList, setReportOpenList] = useState<Report[]>([])
   const [reportSelected, setReportSelected] = useState<Report>()
+  const [pageCount, setPageCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0)
 
   async function getReportsOpen() {
     try {
@@ -15,7 +19,7 @@ export function useReportsOpenController() {
       
       const { error, value, message } = await reportService.getOpened({ 
         page: 0, 
-        pageSize: 15, 
+        pageSize: PAGESIZE, 
         sort: 'asc' 
       })
 
@@ -25,6 +29,7 @@ export function useReportsOpenController() {
       }
 
       setReportOpenList(value.rows)
+      setPageCount(Math.ceil(value.count / PAGESIZE))
     }
     finally {
       setIsLoading(false)
@@ -43,7 +48,7 @@ export function useReportsOpenController() {
 
   useEffect(() => {
     getReportsOpen()
-  }, [])
+  }, [currentPage])
 
   return {
     isLoading,
@@ -52,6 +57,9 @@ export function useReportsOpenController() {
     isOpenReportModal,
     reportOpenList,
     reportSelected,
-    handleReportResolved
+    handleReportResolved,
+    currentPage,
+    setCurrentPage,
+    pageCount
   }
 }
