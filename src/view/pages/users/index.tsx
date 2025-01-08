@@ -1,7 +1,6 @@
 import { Button, Input, Pagination, Select, SelectItem, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
 import { useUsersController } from './useUsersController'
 import { FaSearch } from 'react-icons/fa'
-import { MdEdit } from 'react-icons/md'
 import { BsFillTrashFill } from 'react-icons/bs'
 import { UserFormModal } from '@app/view/components/userFormModal'
 
@@ -17,14 +16,14 @@ const FILTERS = ['usuário']
 export function UsersPage() {
 
   const {
+    userList,
     isLoading,
     pageCount,
+    deleteUser,
     setCurrentPage,
+    onCloseUserForm,
     isOpenUserFormModal,
     setIsOpenUserFormModal,
-    userList,
-    userSelected,
-    onOPenEditForm,
     handleUserFormSubmited
   } = useUsersController()
 
@@ -66,12 +65,11 @@ export function UsersPage() {
               <TableCell>{user.privilege}</TableCell>
               <TableCell>
                 <div className="flex items-center justify-center gap-3">
-                  <button className="text-[1rem]" onClick={() => onOPenEditForm(user)}>
-                    <MdEdit />
-                  </button>
-                  <button className="text-[1rem]" onClick={() => { }}>
-                    <BsFillTrashFill color="#f35555" />
-                  </button>
+                  {user.privilege !== 'ADM' &&
+                    <button className="text-[1rem]" onClick={() => deleteUser(user.id)}>
+                      <BsFillTrashFill color="#f35555" />
+                    </button>
+                  }
                 </div>
               </TableCell>
             </TableRow>
@@ -90,9 +88,8 @@ export function UsersPage() {
       }
 
       <UserFormModal
-        data={userSelected}
         isOpen={isOpenUserFormModal}
-        onClose={() => setIsOpenUserFormModal(false)}
+        onClose={onCloseUserForm}
         onFormSubmited={handleUserFormSubmited} />
     </div>
   )

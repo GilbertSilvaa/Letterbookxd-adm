@@ -18,11 +18,12 @@ type TUserFormModalProps = {
 }
 
 export function UserFormModal({ data, isOpen, onClose, onFormSubmited }: TUserFormModalProps) {
-  const { 
-    isSubmitLoading, 
+  const {
+    isSubmitLoading,
     onSubmit,
+    formData,
     setFormValue
-  } = useUserFormModalController({ onClose, onFormSubmited })
+  } = useUserFormModalController({ onClose, onFormSubmited, userEdit: data })
 
   return (
     <Modal
@@ -44,8 +45,10 @@ export function UserFormModal({ data, isOpen, onClose, onFormSubmited }: TUserFo
               variant="faded"
               label="Email"
               labelPlacement="outside"
+              value={formData.email}
               onChange={e => setFormValue('email', e.target.value)}
               isRequired
+              isDisabled={!!data}
               required />
 
             <Input
@@ -54,6 +57,7 @@ export function UserFormModal({ data, isOpen, onClose, onFormSubmited }: TUserFo
               variant="faded"
               label="Nickname"
               labelPlacement="outside"
+              value={formData.nickname}
               onChange={e => setFormValue('nickname', e.target.value)}
               isRequired
               required />
@@ -64,26 +68,30 @@ export function UserFormModal({ data, isOpen, onClose, onFormSubmited }: TUserFo
               variant="faded"
               label="Nome"
               labelPlacement="outside"
+              value={formData.name}
               onChange={e => setFormValue('name', e.target.value)}
               isRequired
               required />
 
-            <Input
-              type="password"
-              placeholder="informe a senha"
-              variant="faded"
-              label="Senha"
-              labelPlacement="outside"
-              onChange={e => setFormValue('password', e.target.value)}
-              isRequired
-              required />
+            {!data &&
+              <Input
+                type="password"
+                placeholder="informe a senha"
+                variant="faded"
+                label="Senha"
+                labelPlacement="outside"
+                value={formData.password}
+                onChange={e => setFormValue('password', e.target.value)}
+                isRequired
+                required />
+            }
           </ModalBody>
           <ModalFooter>
             <Button
               type="submit"
               color="primary"
               isLoading={isSubmitLoading}>
-              {data ? 'Atualizar' : 'Cadastrar'}
+              {data ? 'Editar' : 'Cadastrar'}
             </Button>
           </ModalFooter>
         </form>

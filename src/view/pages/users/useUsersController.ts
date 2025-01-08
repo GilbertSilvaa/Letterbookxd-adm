@@ -9,7 +9,6 @@ export function useUsersController() {
   const [isLoading, setIsLoading] = useState(false)
   const [isOpenUserFormModal, setIsOpenUserFormModal] = useState(false)
   const [userList, setUserList] = useState<User[]>([])
-  const [userSelected, setUserSelected] = useState<User>()
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
 
@@ -36,9 +35,32 @@ export function useUsersController() {
     }
   }
 
-  function onOPenEditForm(user: User) {
-    setUserSelected(user)
-    setIsOpenUserFormModal(true)
+  async function deleteUser(id: number) {
+    try {
+      if (!confirm('Deseja realmente deletar este usuário?')) return
+
+      setUserList([])
+      setIsLoading(true)
+
+      const { error, message } = await userService.remove(id)
+
+      if (error) {
+        toast.error(message)
+        handleUserFormSubmited()
+        return
+      }
+
+      toast.success('Usuário deletado com sucesso')
+      handleUserFormSubmited()
+    }
+    catch (error) {
+      toast.error('Ops! Erro ao deletar usuário')
+      handleUserFormSubmited()
+    }
+  }
+
+  function onCloseUserForm() {
+    setIsOpenUserFormModal(false)
   }
 
   function handleUserFormSubmited() {
@@ -54,15 +76,15 @@ export function useUsersController() {
   }, [currentPage])
 
   return {
+    userList,
     isLoading,
     pageCount,
+    deleteUser,
     currentPage,
     setCurrentPage,
+    onCloseUserForm,
     isOpenUserFormModal,
     setIsOpenUserFormModal,
-    userList,
-    userSelected,
-    onOPenEditForm,
-    handleUserFormSubmited
+    handleUserFormSubmited,
   }
 }
