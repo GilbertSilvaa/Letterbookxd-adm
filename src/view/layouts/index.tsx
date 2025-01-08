@@ -14,7 +14,7 @@ const MENU_ITEMS = [
   { label: 'Dashboard', icon: MdDashboard, to: '/', onlyAdmin: false },
   { label: 'Denúncias em Aberto', icon: TbMessageReportFilled, to: '/denuncias', onlyAdmin: false },
   { label: 'Denúncias Fechadas', icon: FaCheckCircle, to: '/denuncias/fechadas', onlyAdmin: false },
-  { label: 'Usuários', icon: FaUserCircle, to: '/usuarios', onlyAdmin: true }
+  { label: 'Moderadores', icon: FaUserCircle, to: '/usuarios', onlyAdmin: true }
 ]
 
 export function Layout({ children }: TLayoutProps) {

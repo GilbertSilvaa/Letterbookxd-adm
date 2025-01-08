@@ -30,7 +30,7 @@ const COLLUNS = [
 
 const FILTERS = ['#', 'usuário']
 
-export function ReportsClose() {
+export function ReportsClosePage() {
   const {
     isLoading,
     isOpenReportModal,

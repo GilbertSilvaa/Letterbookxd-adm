@@ -1,9 +1,10 @@
 import { useAuth } from '@app/app/hooks'
 import { Layout } from '@app/view/layouts'
-import { DashBoard } from '@app/view/pages/dashboard'
-import { ReportsClose } from '@app/view/pages/reportsClose'
-import { ReportsOpen } from '@app/view/pages/reportsOpen'
-import { SignIn } from '@app/view/pages/signin'
+import { DashBoardPage } from '@app/view/pages/dashboard'
+import { ReportsClosePage } from '@app/view/pages/reportsClose'
+import { ReportsOpenPage } from '@app/view/pages/reportsOpen'
+import { SignInPage } from '@app/view/pages/signin'
+import { UsersPage } from '@app/view/pages/users'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 export function Router() {
@@ -12,7 +13,7 @@ export function Router() {
   if (!signedIn) return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SignIn/>} />
+        <Route path="/" element={<SignInPage/>} />
       </Routes>
     </BrowserRouter>
   )
@@ -21,9 +22,10 @@ export function Router() {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<DashBoard/>} />
-          <Route path="/denuncias" element={<ReportsOpen/>} />
-          <Route path="/denuncias/fechadas" element={<ReportsClose/>} />
+          <Route path="/" element={<DashBoardPage/>} />
+          <Route path="/denuncias" element={<ReportsOpenPage/>} />
+          <Route path="/denuncias/fechadas" element={<ReportsClosePage/>} />
+          <Route path="/usuarios" element={<UsersPage/>} />
         </Routes>
       </Layout>
     </BrowserRouter>

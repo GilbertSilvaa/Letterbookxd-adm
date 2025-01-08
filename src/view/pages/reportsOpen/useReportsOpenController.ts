@@ -4,7 +4,7 @@ import { Report } from '@app/app/entities'
 import { reportService } from '@app/app/services/reportService'
 
 export function useReportsOpenController() {
-  const PAGESIZE = 15
+  const PAGESIZE = 10
 
   const [isLoading, setIsLoading] = useState(false)
   const [isOpenReportModal, setIsOpenReportModal] = useState(false)
@@ -15,6 +15,7 @@ export function useReportsOpenController() {
 
   async function getReportsOpen() {
     try {
+      setReportOpenList([])
       setIsLoading(true)
       
       const { error, value, message } = await reportService.getOpened({ 

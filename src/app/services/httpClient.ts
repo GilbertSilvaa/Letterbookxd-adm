@@ -9,6 +9,11 @@ api.interceptors.request.use(config => {
   return config
 })
 
+api.interceptors.response.use(async (data) => {
+  await new Promise(resolve => setTimeout(resolve, 2000))
+  return data
+})
+
 export type TResponseAPI<T> = {
   code: number
   error: boolean

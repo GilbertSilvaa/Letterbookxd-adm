@@ -27,7 +27,7 @@ const COLLUNS = [
 
 const FILTERS = ['#', 'usuário']
 
-export function ReportsOpen() {
+export function ReportsOpenPage() {
   const {
     isLoading,
     isOpenReportModal,

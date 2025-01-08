@@ -2,7 +2,7 @@ import LogoImg from '@app/assets/logo.png'
 import { Button, Input } from '@nextui-org/react'
 import { useSignInController } from './useSignInController'
 
-export function SignIn() {
+export function SignInPage() {
   const { setFormValue, onSubmit } = useSignInController()
 
   return (
