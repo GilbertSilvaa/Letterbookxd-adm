@@ -3,6 +3,7 @@ import { useUsersController } from './useUsersController'
 import { FaSearch } from 'react-icons/fa'
 import { MdEdit } from 'react-icons/md'
 import { BsFillTrashFill } from 'react-icons/bs'
+import { UserFormModal } from '@app/view/components/userFormModal'
 
 const COLLUNS = [
   'USUÁRIO',
@@ -19,7 +20,12 @@ export function UsersPage() {
     isLoading,
     pageCount,
     setCurrentPage,
-    userList
+    isOpenUserFormModal,
+    setIsOpenUserFormModal,
+    userList,
+    userSelected,
+    onOPenEditForm,
+    handleUserFormSubmited
   } = useUsersController()
 
   return (
@@ -42,7 +48,7 @@ export function UsersPage() {
             startContent={<FaSearch />} />
         </div>
 
-        <Button color="primary">Cadastrar</Button>
+        <Button color="primary" onClick={() => setIsOpenUserFormModal(true)}>Cadastrar</Button>
       </div>
 
       <Table>
@@ -60,11 +66,11 @@ export function UsersPage() {
               <TableCell>{user.privilege}</TableCell>
               <TableCell>
                 <div className="flex items-center justify-center gap-3">
-                  <button className="text-[1rem]" onClick={() => { }}>
+                  <button className="text-[1rem]" onClick={() => onOPenEditForm(user)}>
                     <MdEdit />
                   </button>
                   <button className="text-[1rem]" onClick={() => { }}>
-                    <BsFillTrashFill color="#f35555"/>
+                    <BsFillTrashFill color="#f35555" />
                   </button>
                 </div>
               </TableCell>
@@ -83,6 +89,11 @@ export function UsersPage() {
         </div>
       }
 
+      <UserFormModal
+        data={userSelected}
+        isOpen={isOpenUserFormModal}
+        onClose={() => setIsOpenUserFormModal(false)}
+        onFormSubmited={handleUserFormSubmited} />
     </div>
   )
 }

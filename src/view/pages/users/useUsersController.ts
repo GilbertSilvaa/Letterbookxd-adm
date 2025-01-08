@@ -7,7 +7,9 @@ export function useUsersController() {
   const PAGESIZE = 10
 
   const [isLoading, setIsLoading] = useState(false)
+  const [isOpenUserFormModal, setIsOpenUserFormModal] = useState(false)
   const [userList, setUserList] = useState<User[]>([])
+  const [userSelected, setUserSelected] = useState<User>()
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
 
@@ -34,6 +36,19 @@ export function useUsersController() {
     }
   }
 
+  function onOPenEditForm(user: User) {
+    setUserSelected(user)
+    setIsOpenUserFormModal(true)
+  }
+
+  function handleUserFormSubmited() {
+    if (currentPage === 0) {
+      getUsers()
+      return
+    }
+    setCurrentPage(0)
+  }
+
   useEffect(() => {
     getUsers()
   }, [currentPage])
@@ -43,6 +58,11 @@ export function useUsersController() {
     pageCount,
     currentPage,
     setCurrentPage,
-    userList
+    isOpenUserFormModal,
+    setIsOpenUserFormModal,
+    userList,
+    userSelected,
+    onOPenEditForm,
+    handleUserFormSubmited
   }
 }
