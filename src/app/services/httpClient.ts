@@ -10,7 +10,7 @@ api.interceptors.request.use(config => {
 })
 
 api.interceptors.response.use(async (data) => {
-  await new Promise(resolve => setTimeout(resolve, 2000))
+  await new Promise(resolve => setTimeout(resolve, 500))
   return data
 })
 

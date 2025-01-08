@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { FaCheckCircle, FaRegUserCircle, FaSignOutAlt, FaUserCircle } from 'react-icons/fa'
 import { MdDashboard } from 'react-icons/md'
 import { TbMessageReportFilled } from 'react-icons/tb'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@app/app/hooks'
 import Logo from '@app/assets/logo.png'
 
@@ -19,8 +19,16 @@ const MENU_ITEMS = [
 
 export function Layout({ children }: TLayoutProps) {
   const location = useLocation()
+  const navigate = useNavigate()
 
-  const { user } = useAuth()
+  const { user, signOut } = useAuth()
+
+  function logout() {
+    if (!confirm('Deseja realmente sair?')) return
+
+    signOut()
+    navigate('/')
+  }
 
   return (
     <div className="flex">
@@ -28,7 +36,7 @@ export function Layout({ children }: TLayoutProps) {
         <img src={Logo} alt="logo" className="w-[90%]" />
 
         <ul className="mt-5 w-full px-4 flex flex-col gap-4 text-[#eee]">
-          {MENU_ITEMS.map((params, index) => (
+          {MENU_ITEMS.filter(i => user?.privilege === 'ADM' || !i.onlyAdmin).map((params, index) => (
             <Link key={index} to={params.to}>
               <li className={`flex items-center gap-3 font-semibold p-3 rounded transition-all ${params.to === location.pathname ? 'bg-primary' : 'hover:bg-[#333]'}`}>
                 <params.icon/> 
@@ -39,10 +47,10 @@ export function Layout({ children }: TLayoutProps) {
         </ul>
 
         <div className="w-full p-4 flex-1 flex flex-col justify-end">
-          <Link to="" className="flex items-center gap-3 font-semibold p-3 rounded transition-all hover:bg-[#333]">
+          <button onClick={() => logout()} className="flex items-center gap-3 font-semibold p-3 rounded transition-all hover:bg-[#333]">
             <FaSignOutAlt/>
             Sair
-          </Link>
+          </button>
         </div>
       </aside>
       

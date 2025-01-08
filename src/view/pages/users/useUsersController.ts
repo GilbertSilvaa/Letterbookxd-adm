@@ -39,14 +39,10 @@ export function useUsersController() {
     try {
       if (!confirm('Deseja realmente deletar este usuário?')) return
 
-      setUserList([])
-      setIsLoading(true)
-
       const { error, message } = await userService.remove(id)
 
       if (error) {
         toast.error(message)
-        handleUserFormSubmited()
         return
       }
 
@@ -55,7 +51,6 @@ export function useUsersController() {
     }
     catch (error) {
       toast.error('Ops! Erro ao deletar usuário')
-      handleUserFormSubmited()
     }
   }
 

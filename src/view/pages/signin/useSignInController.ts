@@ -2,11 +2,8 @@ import { useAuth } from '@app/app/hooks'
 import { userService } from '@app/app/services/userService'
 import { FormEvent, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
 
 export function useSignInController() {
-  const navigate = useNavigate()
-
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
@@ -33,7 +30,7 @@ export function useSignInController() {
       }
 
       signIn(value.token)
-      navigate('/')
+      location.reload()
     }
     catch {
       toast.error('email ou senha incorreta')

@@ -3,7 +3,7 @@ import { Button, Input } from '@nextui-org/react'
 import { useSignInController } from './useSignInController'
 
 export function SignInPage() {
-  const { setFormValue, onSubmit } = useSignInController()
+  const { setFormValue, onSubmit, isLoading } = useSignInController()
 
   return (
     <div className="w-full flex justify-center items-center">
@@ -36,7 +36,8 @@ export function SignInPage() {
           type="submit"
           color="primary" 
           variant="solid"
-          className="mt-3">
+          className="mt-3"
+          isLoading={isLoading}>
           Entrar
         </Button>
       </form>
