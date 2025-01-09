@@ -47,6 +47,15 @@ export function useReportsOpenController() {
     getReportsOpen()
   }
 
+  function refresh() {
+    if (currentPage === 0) {
+      getReportsOpen()
+      return
+    }
+
+    setCurrentPage(0)
+  }
+
   useEffect(() => {
     getReportsOpen()
   }, [currentPage])
@@ -61,6 +70,7 @@ export function useReportsOpenController() {
     handleReportResolved,
     currentPage,
     setCurrentPage,
-    pageCount
+    pageCount,
+    refresh
   }
 }

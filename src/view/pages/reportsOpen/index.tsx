@@ -1,4 +1,5 @@
 import { FaSearch } from 'react-icons/fa'
+import { LuRefreshCcw } from 'react-icons/lu'
 import { LuSearchCheck } from 'react-icons/lu'
 import {
   Input,
@@ -37,30 +38,37 @@ export function ReportsOpenPage() {
     handleSelectReport,
     handleReportResolved,
     pageCount,
-    setCurrentPage
+    setCurrentPage,
+    refresh
   } = useReportsOpenController()
 
   return (
     <div>
       <h1 className="text-[20px] font-semibold mb-6">Denúncias em Aberto</h1>
 
-      <div className="w-full flex items-center gap-4 mb-4">
-        <Select
-          className="w-full sm:w-[10%]"
-          disableSelectorIconRotation
-          defaultSelectedKeys={"0"}>
-          {FILTERS.map((filter, index) => (
-            <SelectItem key={index}>
-              {filter}
-            </SelectItem>
-          ))}
-        </Select>
+      <div className="w-full flex items-center justify-between mb-4">
+        <div className="w-full flex items-center gap-4 ">
+          <Select
+            className="w-full sm:w-[10%]"
+            disableSelectorIconRotation
+            defaultSelectedKeys={"0"}>
+            {FILTERS.map((filter, index) => (
+              <SelectItem key={index}>
+                {filter}
+              </SelectItem>
+            ))}
+          </Select>
 
-        <Input
-          isClearable
-          className="w-full sm:max-w-[30%]"
-          placeholder="Digite aqui..."
-          startContent={<FaSearch />} />
+          <Input
+            isClearable
+            className="w-full sm:max-w-[30%]"
+            placeholder="Digite aqui..."
+            startContent={<FaSearch />} />
+        </div>
+
+        <button className="mr-4 text-orange-400 text-[20px]" onClick={refresh}>
+          <LuRefreshCcw />
+        </button>
       </div>
 
       <Table>
