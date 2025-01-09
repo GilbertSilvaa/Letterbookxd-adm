@@ -1,11 +1,7 @@
-import { FaSearch } from 'react-icons/fa'
 import { LuRefreshCcw } from 'react-icons/lu'
 import { LuSearchCheck } from 'react-icons/lu'
 import {
-  Input,
   Pagination,
-  Select,
-  SelectItem,
   Spinner,
   Table,
   TableBody,
@@ -26,8 +22,6 @@ const COLLUNS = [
   ''
 ]
 
-const FILTERS = ['#', 'usuário']
-
 export function ReportsOpenPage() {
   const {
     isLoading,
@@ -46,26 +40,7 @@ export function ReportsOpenPage() {
     <div>
       <h1 className="text-[20px] font-semibold mb-6">Denúncias em Aberto</h1>
 
-      <div className="w-full flex items-center justify-between mb-4">
-        <div className="w-full flex items-center gap-4 ">
-          <Select
-            className="w-full sm:w-[10%]"
-            disableSelectorIconRotation
-            defaultSelectedKeys={"0"}>
-            {FILTERS.map((filter, index) => (
-              <SelectItem key={index}>
-                {filter}
-              </SelectItem>
-            ))}
-          </Select>
-
-          <Input
-            isClearable
-            className="w-full sm:max-w-[30%]"
-            placeholder="Digite aqui..."
-            startContent={<FaSearch />} />
-        </div>
-
+      <div className="w-full flex items-center justify-end mb-4">
         <button className="mr-4 text-orange-400 text-[20px]" onClick={refresh}>
           <LuRefreshCcw />
         </button>

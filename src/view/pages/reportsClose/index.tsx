@@ -1,10 +1,6 @@
-import { FaSearch } from 'react-icons/fa'
-import { LuSearchCheck } from 'react-icons/lu'
+import { LuRefreshCcw, LuSearchCheck } from 'react-icons/lu'
 import {
-  Input,
   Pagination,
-  Select,
-  SelectItem,
   Spinner,
   Table,
   TableBody,
@@ -28,8 +24,6 @@ const COLLUNS = [
   ''
 ]
 
-const FILTERS = ['#', 'usuário']
-
 export function ReportsClosePage() {
   const {
     isLoading,
@@ -40,26 +34,18 @@ export function ReportsClosePage() {
     handleSelectReport,
     handleReportResolved,
     pageCount,
-    setCurrentPage
+    setCurrentPage,
+    refresh
   } = useReportsCloseController()
 
   return (
     <div>
       <h1 className="text-[20px] font-semibold mb-6">Denúncias Fechadas</h1>
 
-      <div className="w-full flex items-center gap-4 mb-4">
-        <Select
-          className="w-full sm:w-[10%]"
-          disableSelectorIconRotation
-          defaultSelectedKeys={"0"}>
-          {FILTERS.map((filter, index) => (<SelectItem key={index}>{filter}</SelectItem>))}
-        </Select>
-
-        <Input
-          isClearable
-          className="w-full sm:max-w-[30%]"
-          placeholder="Digite aqui..."
-          startContent={<FaSearch />} />
+      <div className="w-full flex items-center justify-end mb-4">
+        <button className="mr-4 text-orange-400 text-[20px]" onClick={refresh}>
+          <LuRefreshCcw />
+        </button>
       </div>
 
       <Table>

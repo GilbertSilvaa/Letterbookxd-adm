@@ -46,6 +46,15 @@ export function useReportsCloseController() {
     getReportsClosed()
   }
 
+  function refresh() {
+    if (currentPage === 0) {
+      getReportsClosed()
+      return
+    }
+
+    setCurrentPage(0)
+  }
+
   useEffect(() => {
     getReportsClosed()
   }, [currentPage])
@@ -60,6 +69,7 @@ export function useReportsCloseController() {
     handleReportResolved,
     currentPage,
     setCurrentPage,
-    pageCount
+    pageCount,
+    refresh
   }
 }
