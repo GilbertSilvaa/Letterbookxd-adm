@@ -45,7 +45,7 @@ export function ReportOpenModal({ data, isOpen, onClose, onResolved }: TReportOp
                 <p className="ml-3 text-[#bbb]">{data?.originalComment}</p>
               </div>
 
-              <span className="text-[#bbb] ml-3">criada em {new Date(data?.creationDate!).toLocaleDateString()}</span>
+              <span className="text-[#bbb] mt-2">criada em {new Date(data?.creationDate!).toLocaleDateString()}</span>
             </div>
           </ModalBody>
           <ModalFooter>
