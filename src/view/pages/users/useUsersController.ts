@@ -11,15 +11,17 @@ export function useUsersController() {
   const [userList, setUserList] = useState<User[]>([])
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
+  const [searchText, setSeachText] = useState('')
 
-  async function getUsers() {
+  async function getUsers(search?: string) {
     try {
       setUserList([])
       setIsLoading(true)
 
       const { value, error, message } = await userService.get({
         page: currentPage,
-        pageSize: PAGESIZE
+        pageSize: PAGESIZE,
+        search: search ?? searchText
       })
 
       if (error) {
@@ -66,6 +68,15 @@ export function useUsersController() {
     setCurrentPage(0)
   }
 
+  function handleSearchForm(text: string) {
+    setSeachText(text)
+
+    if (text.length < 3 && text.length !== 0) return
+    
+    setCurrentPage(0)
+    getUsers(text)
+  }
+
   useEffect(() => {
     getUsers()
   }, [currentPage])
@@ -81,5 +92,6 @@ export function useUsersController() {
     isOpenUserFormModal,
     setIsOpenUserFormModal,
     handleUserFormSubmited,
+    handleSearchForm
   }
 }

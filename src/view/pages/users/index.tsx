@@ -24,7 +24,8 @@ export function UsersPage() {
     onCloseUserForm,
     isOpenUserFormModal,
     setIsOpenUserFormModal,
-    handleUserFormSubmited
+    handleUserFormSubmited,
+    handleSearchForm
   } = useUsersController()
 
   return (
@@ -44,7 +45,8 @@ export function UsersPage() {
             isClearable
             className="w-full sm:max-w-[30%]"
             placeholder="Digite aqui..."
-            startContent={<FaSearch />} />
+            startContent={<FaSearch />}
+            onChange={e => handleSearchForm(e.target.value)} />
         </div>
 
         <Button color="primary" onClick={() => setIsOpenUserFormModal(true)}>Cadastrar</Button>
