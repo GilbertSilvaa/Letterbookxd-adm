@@ -7,7 +7,7 @@ type TGetUsersByNicknameParams = {
   search?: string
 }
 
-type TGetUsersDTO = Partial<User> & {
+export type TGetUsersDTO = Partial<User> & {
   reviewsCount: number
   reportsDoneCount: number
   successfulReportsCount: number

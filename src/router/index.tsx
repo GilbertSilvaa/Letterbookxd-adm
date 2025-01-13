@@ -7,6 +7,7 @@ import { ReportsOpenPage } from '@app/view/pages/reportsOpen'
 import { SignInPage } from '@app/view/pages/signin'
 import { ModeratorsPage } from '@app/view/pages/moderators'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { UsersPage } from '@app/view/pages/users'
 
 export function Router() {
   const { signedIn, user } = useAuth()
@@ -26,6 +27,7 @@ export function Router() {
           <Route path="/" element={<DashBoardPage />} />
           <Route path="/denuncias" element={<ReportsOpenPage />} />
           <Route path="/denuncias/fechadas" element={<ReportsClosePage />} />
+          <Route path="/usuarios" element={<UsersPage />} />
           <Route path="/moderadores" element={user?.privilege === 'ADM' ? <ModeratorsPage /> : <NotAuthorization />} />
         </Routes>
       </Layout>

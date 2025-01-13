@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { FaCheckCircle, FaRegUserCircle, FaSignOutAlt, FaUserCircle } from 'react-icons/fa'
+import { FaCheckCircle, FaRegUserCircle, FaSignOutAlt, FaUserCircle, FaUsers } from 'react-icons/fa'
 import { MdDashboard } from 'react-icons/md'
 import { TbMessageReportFilled } from 'react-icons/tb'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -14,6 +14,7 @@ const MENU_ITEMS = [
   { label: 'Dashboard', icon: MdDashboard, to: '/', onlyAdmin: false },
   { label: 'Denúncias em Aberto', icon: TbMessageReportFilled, to: '/denuncias', onlyAdmin: false },
   { label: 'Denúncias Fechadas', icon: FaCheckCircle, to: '/denuncias/fechadas', onlyAdmin: false },
+  { label: 'Usuários', icon: FaUsers, to: '/usuarios', onlyAdmin: false },
   { label: 'Moderadores', icon: FaUserCircle, to: '/moderadores', onlyAdmin: true }
 ]
 
