@@ -8,22 +8,22 @@ import {
   ModalHeader
 } from '@nextui-org/react'
 import { User } from '@app/app/entities'
-import { useUserFormModalController } from './useUserFormModalController'
+import { useModeratorFormModalController } from './useModeratorFormModalController'
 
-type TUserFormModalProps = {
+type TModeratorFormModalProps = {
   data?: User
   isOpen: boolean,
   onClose: () => void
   onFormSubmited: () => void
 }
 
-export function UserFormModal({ data, isOpen, onClose, onFormSubmited }: TUserFormModalProps) {
+export function ModeratorFormModal({ data, isOpen, onClose, onFormSubmited }: TModeratorFormModalProps) {
   const {
     isSubmitLoading,
     onSubmit,
     formData,
     setFormValue
-  } = useUserFormModalController({ onClose, onFormSubmited, userEdit: data })
+  } = useModeratorFormModalController({ onClose, onFormSubmited, userEdit: data })
 
   return (
     <Modal

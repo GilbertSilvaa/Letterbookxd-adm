@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { userService } from '@app/app/services/userService'
+import { moderatorService } from '@app/app/services/moderatorService'
 import { User } from '@app/app/entities'
 
-export function useUsersController() {
+export function useModeratorsController() {
   const PAGESIZE = 10
 
   const [isLoading, setIsLoading] = useState(false)
-  const [isOpenUserFormModal, setIsOpenUserFormModal] = useState(false)
-  const [userList, setUserList] = useState<User[]>([])
+  const [isOpenModeratorFormModal, setIsOpenModeratorFormModal] = useState(false)
+  const [moderatorList, setModeratorList] = useState<User[]>([])
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
   const [searchText, setSeachText] = useState('')
 
-  async function getUsers(search?: string) {
+  async function getModerators(search?: string) {
     try {
-      setUserList([])
+      setModeratorList([])
       setIsLoading(true)
 
-      const { value, error, message } = await userService.get({
+      const { value, error, message } = await moderatorService.get({
         page: currentPage,
         pageSize: PAGESIZE,
         search: search ?? searchText
@@ -29,7 +29,7 @@ export function useUsersController() {
         return
       }
 
-      setUserList(value.rows)
+      setModeratorList(value.rows)
       setPageCount(Math.ceil(value.count / PAGESIZE))
     }
     finally {
@@ -37,32 +37,32 @@ export function useUsersController() {
     }
   }
 
-  async function deleteUser(id: number) {
+  async function deleteModerator(id: number) {
     try {
-      if (!confirm('Deseja realmente deletar este usuário?')) return
+      if (!confirm('Deseja realmente deletar este moderador?')) return
 
-      const { error, message } = await userService.remove(id)
+      const { error, message } = await moderatorService.remove(id)
 
       if (error) {
         toast.error(message)
         return
       }
 
-      toast.success('Usuário deletado com sucesso')
-      handleUserFormSubmited()
+      toast.success('Moderador deletado com sucesso')
+      handleModeratorFormSubmited()
     }
     catch (error) {
-      toast.error('Ops! Erro ao deletar usuário')
+      toast.error('Ops! Erro ao deletar moderador')
     }
   }
 
-  function onCloseUserForm() {
-    setIsOpenUserFormModal(false)
+  function onCloseModeratorForm() {
+    setIsOpenModeratorFormModal(false)
   }
 
-  function handleUserFormSubmited() {
+  function handleModeratorFormSubmited() {
     if (currentPage === 0) {
-      getUsers()
+      getModerators()
       return
     }
     setCurrentPage(0)
@@ -74,24 +74,24 @@ export function useUsersController() {
     if (text.length < 3 && text.length !== 0) return
     
     setCurrentPage(0)
-    getUsers(text)
+    getModerators(text)
   }
 
   useEffect(() => {
-    getUsers()
+    getModerators()
   }, [currentPage])
 
   return {
-    userList,
+    moderatorList,
     isLoading,
     pageCount,
-    deleteUser,
+    deleteModerator,
     currentPage,
     setCurrentPage,
-    onCloseUserForm,
-    isOpenUserFormModal,
-    setIsOpenUserFormModal,
-    handleUserFormSubmited,
+    onCloseModeratorForm,
+    isOpenModeratorFormModal,
+    setIsOpenModeratorFormModal,
+    handleModeratorFormSubmited,
     handleSearchForm
   }
 }

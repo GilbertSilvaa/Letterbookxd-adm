@@ -5,7 +5,7 @@ import { get } from './get'
 import { me } from './me'
 import { remove } from './remove'
 
-export const userService = {
+export const moderatorService = {
   me,
   auth,
   get,

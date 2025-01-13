@@ -1,8 +1,8 @@
 import { Button, Input, Pagination, Select, SelectItem, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
-import { useUsersController } from './useUsersController'
+import { useModeratorsController } from './useModeratorsController'
 import { FaSearch } from 'react-icons/fa'
 import { BsFillTrashFill } from 'react-icons/bs'
-import { UserFormModal } from '@app/view/components/userFormModal'
+import { ModeratorFormModal } from '@app/view/components/moderatorFormModal'
 
 const COLLUNS = [
   'USUÁRIO',
@@ -13,20 +13,20 @@ const COLLUNS = [
 
 const FILTERS = ['usuário']
 
-export function UsersPage() {
+export function ModeratorsPage() {
 
   const {
-    userList,
+    moderatorList,
     isLoading,
     pageCount,
-    deleteUser,
+    deleteModerator,
     setCurrentPage,
-    onCloseUserForm,
-    isOpenUserFormModal,
-    setIsOpenUserFormModal,
-    handleUserFormSubmited,
+    onCloseModeratorForm,
+    isOpenModeratorFormModal,
+    setIsOpenModeratorFormModal,
+    handleModeratorFormSubmited,
     handleSearchForm
-  } = useUsersController()
+  } = useModeratorsController()
 
   return (
     <div>
@@ -49,7 +49,7 @@ export function UsersPage() {
             onChange={e => handleSearchForm(e.target.value)} />
         </div>
 
-        <Button color="primary" onClick={() => setIsOpenUserFormModal(true)}>Cadastrar</Button>
+        <Button color="primary" onClick={() => setIsOpenModeratorFormModal(true)}>Cadastrar</Button>
       </div>
 
       <Table>
@@ -60,7 +60,7 @@ export function UsersPage() {
           emptyContent="Sem registros"
           isLoading={isLoading}
           loadingContent={<Spinner label="Carregando..." />}>
-          {userList.map((user, index) => (
+          {moderatorList.map((user, index) => (
             <TableRow key={index}>
               <TableCell>{user.nickname}</TableCell>
               <TableCell>{user.email}</TableCell>
@@ -68,7 +68,7 @@ export function UsersPage() {
               <TableCell>
                 <div className="flex items-center justify-center gap-3">
                   {user.privilege !== 'ADM' &&
-                    <button className="text-[1rem]" onClick={() => deleteUser(user.id)}>
+                    <button className="text-[1rem]" onClick={() => deleteModerator(user.id)}>
                       <BsFillTrashFill color="#f35555" />
                     </button>
                   }
@@ -89,10 +89,10 @@ export function UsersPage() {
         </div>
       }
 
-      <UserFormModal
-        isOpen={isOpenUserFormModal}
-        onClose={onCloseUserForm}
-        onFormSubmited={handleUserFormSubmited} />
+      <ModeratorFormModal
+        isOpen={isOpenModeratorFormModal}
+        onClose={onCloseModeratorForm}
+        onFormSubmited={handleModeratorFormSubmited} />
     </div>
   )
 }

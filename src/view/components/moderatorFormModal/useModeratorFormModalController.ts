@@ -1,9 +1,9 @@
 import { User } from '@app/app/entities'
-import { userService } from '@app/app/services/userService'
+import { moderatorService } from '@app/app/services/moderatorService'
 import { FormEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
-type TUseUserFormModalControllerParams = {
+type TUseModeratorFormModalControllerParams = {
   userEdit?: User
   onClose: () => void
   onFormSubmited: () => void
@@ -17,7 +17,7 @@ type TFomData = {
   password?: string
 }
 
-export function useUserFormModalController({ userEdit, onClose, onFormSubmited }: TUseUserFormModalControllerParams) {
+export function useModeratorFormModalController({ userEdit, onClose, onFormSubmited }: TUseModeratorFormModalControllerParams) {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false)
   const [formData, setFormData] = useState<TFomData>({})
 
@@ -33,7 +33,7 @@ export function useUserFormModalController({ userEdit, onClose, onFormSubmited }
       setIsSubmitLoading(true)
 
       if (!!formData.id) {
-        const { error, message } = await userService.edit({
+        const { error, message } = await moderatorService.edit({
           id: formData.id!,
           name: formData.name!,
           nickname: formData.nickname!
@@ -42,7 +42,7 @@ export function useUserFormModalController({ userEdit, onClose, onFormSubmited }
         if (error) throw new Error(message)
       }
       else {
-        const { error, message } = await userService.create({
+        const { error, message } = await moderatorService.create({
           name: formData.name!,
           email: formData.email!,
           nickname: formData.nickname!,

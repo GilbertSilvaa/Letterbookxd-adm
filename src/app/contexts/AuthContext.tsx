@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { createContext, ReactNode, useCallback, useEffect, useState } from 'react'
 import { localStorageKeys } from '../config'
 import { User } from '../entities'
-import { userService } from '../services/userService'
+import { moderatorService } from '../services/moderatorService'
 
 type TAuthContextValue = {
   signedIn: boolean
@@ -25,7 +25,7 @@ export function AuthProvider({ children }: TAuthProviderProps) {
 
   const { isError, isFetching, isSuccess, data, refetch } = useQuery({
     queryKey: ['user', 'me'],
-    queryFn: () => userService.me(),
+    queryFn: () => moderatorService.me(),
     enabled: signedIn,
     staleTime: Infinity
   })

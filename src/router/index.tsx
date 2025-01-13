@@ -5,7 +5,7 @@ import { NotAuthorization } from '@app/view/pages/notAuthorization'
 import { ReportsClosePage } from '@app/view/pages/reportsClose'
 import { ReportsOpenPage } from '@app/view/pages/reportsOpen'
 import { SignInPage } from '@app/view/pages/signin'
-import { UsersPage } from '@app/view/pages/users'
+import { ModeratorsPage } from '@app/view/pages/moderators'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 export function Router() {
@@ -26,7 +26,7 @@ export function Router() {
           <Route path="/" element={<DashBoardPage />} />
           <Route path="/denuncias" element={<ReportsOpenPage />} />
           <Route path="/denuncias/fechadas" element={<ReportsClosePage />} />
-          <Route path="/usuarios" element={user?.privilege === 'ADM' ? <UsersPage /> : <NotAuthorization />} />
+          <Route path="/moderadores" element={user?.privilege === 'ADM' ? <ModeratorsPage /> : <NotAuthorization />} />
         </Routes>
       </Layout>
     </BrowserRouter>

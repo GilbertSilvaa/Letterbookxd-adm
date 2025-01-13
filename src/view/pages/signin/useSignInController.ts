@@ -1,5 +1,5 @@
 import { useAuth } from '@app/app/hooks'
-import { userService } from '@app/app/services/userService'
+import { moderatorService } from '@app/app/services/moderatorService'
 import { FormEvent, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -22,7 +22,7 @@ export function useSignInController() {
     setIsLoading(true)
     
     try {
-      const { error, value, message } = await userService.auth(formData)
+      const { error, value, message } = await moderatorService.auth(formData)
       
       if (error) {
         toast.error(message)
