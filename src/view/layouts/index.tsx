@@ -40,7 +40,7 @@ export function Layout({ children }: TLayoutProps) {
           {MENU_ITEMS.filter(i => user?.privilege === 'ADM' || !i.onlyAdmin).map((params, index) => (
             <Link key={index} to={params.to}>
               <li className={`flex items-center gap-3 font-semibold p-3 rounded transition-all ${params.to === location.pathname ? 'bg-primary' : 'hover:bg-[#333]'}`}>
-                <params.icon/> 
+                <params.icon />
                 <span>{params.label}</span>
               </li>
             </Link>
@@ -48,13 +48,15 @@ export function Layout({ children }: TLayoutProps) {
         </ul>
 
         <div className="w-full p-4 flex-1 flex flex-col justify-end">
-          <button onClick={() => logout()} className="flex items-center gap-3 font-semibold p-3 rounded transition-all hover:bg-[#333]">
-            <FaSignOutAlt/>
+          <button
+            className="flex items-center gap-3 font-semibold p-3 rounded transition-all hover:bg-[#333]"
+            onClick={() => logout()} >
+            <FaSignOutAlt />
             Sair
           </button>
         </div>
       </aside>
-      
+
       <main className="flex-1 flex flex-col">
         <aside className="w-full h-[3rem] bg-[#18181a] flex justify-end">
           <div className="flex items-center gap-2 px-5 mr-4">
@@ -62,9 +64,9 @@ export function Layout({ children }: TLayoutProps) {
             <span className="font-normal">{user?.nickname}</span>
           </div>
         </aside>
-        
+
         <div className="p-6 flex-1">
-          { children }
+          {children}
         </div>
       </main>
     </div>

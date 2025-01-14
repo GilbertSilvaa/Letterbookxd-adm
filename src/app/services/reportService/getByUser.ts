@@ -1,3 +1,4 @@
+import { Report } from '@app/app/entities'
 import { api, TResponseAPI } from '../httpClient'
 
 type TGetReportsByUserParams = {

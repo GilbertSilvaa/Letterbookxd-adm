@@ -1,8 +1,21 @@
-import { Button, Input, Pagination, Select, SelectItem, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
-import { useModeratorsController } from './useModeratorsController'
 import { FaSearch } from 'react-icons/fa'
 import { BsFillTrashFill } from 'react-icons/bs'
+import { useModeratorsController } from './useModeratorsController'
 import { ModeratorFormModal } from '@app/view/components/moderatorFormModal'
+import { 
+  Button, 
+  Input, 
+  Pagination, 
+  Select, 
+  SelectItem, 
+  Spinner, 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableColumn, 
+  TableHeader, 
+  TableRow 
+} from '@nextui-org/react'
 
 const COLLUNS = [
   'USUÁRIO',

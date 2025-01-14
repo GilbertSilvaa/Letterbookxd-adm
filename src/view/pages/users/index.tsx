@@ -1,7 +1,21 @@
-import { Input, Pagination, Select, SelectItem, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
-import { useUsersController } from './useUsersController'
 import { FaSearch } from 'react-icons/fa'
 import { LuSearch } from 'react-icons/lu'
+import { useUsersController } from './useUsersController'
+import {
+  Input,
+  Pagination,
+  Select,
+  SelectItem,
+  Spinner,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow
+} from '@nextui-org/react'
+import { UserModal } from '@app/view/components/userModal'
+import { User } from '@app/app/entities'
 
 const COLLUNS = [
   'USUÁRIO',
@@ -22,7 +36,13 @@ export function UsersPage() {
     userList,
     pageCount,
     setCurrentPage,
-    handleSearchForm
+    handleSearchForm,
+    isOpenUserModal,
+    setIsOpenUserModal,
+    userSelected,
+    handleSelectUser,
+    userReports,
+    isLoadingUserReports
   } = useUsersController()
 
   return (
@@ -64,7 +84,7 @@ export function UsersPage() {
               <TableCell>{user.successfulReportsCount}</TableCell>
               <TableCell>{user.reportsReceivedCount}</TableCell>
               <TableCell>
-                <button className="text-[1rem]" onClick={() => { }}>
+                <button className="text-[1rem]" onClick={() => handleSelectUser(user as User)}>
                   <LuSearch />
                 </button>
               </TableCell>
@@ -82,6 +102,13 @@ export function UsersPage() {
             onChange={page => setCurrentPage(page - 1)} />
         </div>
       }
+
+      <UserModal
+        isOpen={isOpenUserModal}
+        onClose={() => setIsOpenUserModal(false)} 
+        user={userSelected}
+        reports={userReports}
+        isLoading={isLoadingUserReports}/>
     </div>
   )
 }

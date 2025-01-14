@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { localStorageKeys } from '../config'
 
-export const api = axios.create({ baseURL: 'http://localhost:4000' })
+export const api = axios.create({ baseURL: import.meta.env.VITE_API_URL })
 
 api.interceptors.request.use(config => {
   const accessToken = localStorage.getItem(localStorageKeys.ACCESS_TOKEN)
