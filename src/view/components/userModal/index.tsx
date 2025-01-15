@@ -1,4 +1,4 @@
-import { Report, User } from '@app/app/entities'
+import { FaAnglesUp, FaAnglesDown } from 'react-icons/fa6'
 import {
   Button,
   Modal,
@@ -6,6 +6,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Pagination,
   Spinner,
   Table,
   TableBody,
@@ -16,28 +17,29 @@ import {
 } from '@nextui-org/react'
 import { useUserModalController } from './useUserModalController'
 import { EReportStatus } from '@app/app/enums'
+import { TGetUsersDTO } from '@app/app/services/userService/getByNickname'
 
 type TUserModalProps = {
-  user?: User
-  reports: Report[]
-  isLoading: boolean
+  user: TGetUsersDTO
   isOpen: boolean
   onClose: () => void
 }
 
-export function UserModal({ user, reports, isLoading, isOpen, onClose }: TUserModalProps) {
+export function UserModal({ user, isOpen, onClose }: TUserModalProps) {
 
   const {
-    reports: reportList,
-    handleCloseModal
-  } = useUserModalController({ onClose, reportList: reports })
+    reportList,
+    isLoading,
+    pageCount,
+    setCurrentPage
+  } = useUserModalController({ user })
 
   return (
     <Modal
       size="5xl"
       backdrop="opaque"
       isOpen={isOpen}
-      onOpenChange={handleCloseModal}
+      onOpenChange={onClose}
       isDismissable={false}
       classNames={{
         backdrop: 'bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20'
@@ -60,6 +62,15 @@ export function UserModal({ user, reports, isLoading, isOpen, onClose }: TUserMo
                 <h1 className="text-[20px] font-semibold">{user?.name}</h1>
                 <span className="text-[#bbb]">@{user?.nickname}</span>
                 <span className="text-[#bbb]">{user?.email}</span>
+
+                <div className="mt-4 flex gap-5">
+                  <span className="text-red-400 flex items-center gap-2 font-semibold">
+                    <FaAnglesDown/> {user?.reportsReceivedCount} Denúncias Recebidas 
+                  </span>
+                  <span className="text-green-400 flex items-center gap-2 font-semibold">
+                    <FaAnglesUp/> {user?.reportsDoneCount} Denúncias Enviadas 
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -92,13 +103,24 @@ export function UserModal({ user, reports, isLoading, isOpen, onClose }: TUserMo
                         {report.status === EReportStatus.DENIED &&
                           <span className="py-1 px-2 rounded-lg bg-red-700 font-semibold text-[12px]">REJEITADO</span>}
 
-                         {report.status === EReportStatus.OPENED &&
+                        {report.status === EReportStatus.OPENED &&
                           <span className="py-1 px-2 rounded-lg bg-gray-600 font-semibold text-[12px]">EM ABERTO</span>}
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
+
+              {pageCount > 1 &&
+                <div className="flex justify-center items-center mt-2">
+                  <Pagination
+                    isCompact
+                    variant="bordered"
+                    initialPage={1}
+                    total={pageCount}
+                    onChange={page => setCurrentPage(page - 1)} />
+                </div>
+              }
             </div>
 
           </div>
@@ -107,7 +129,7 @@ export function UserModal({ user, reports, isLoading, isOpen, onClose }: TUserMo
           <Button
             type="submit"
             color="danger"
-            isLoading={true}>
+            isLoading={false}>
             Desativar Usuário
           </Button>
         </ModalFooter>

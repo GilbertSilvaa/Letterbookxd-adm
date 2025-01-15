@@ -15,7 +15,6 @@ import {
   TableRow
 } from '@nextui-org/react'
 import { UserModal } from '@app/view/components/userModal'
-import { User } from '@app/app/entities'
 
 const COLLUNS = [
   'USUÁRIO',
@@ -40,9 +39,7 @@ export function UsersPage() {
     isOpenUserModal,
     setIsOpenUserModal,
     userSelected,
-    handleSelectUser,
-    userReports,
-    isLoadingUserReports
+    handleSelectUser
   } = useUsersController()
 
   return (
@@ -84,7 +81,7 @@ export function UsersPage() {
               <TableCell>{user.successfulReportsCount}</TableCell>
               <TableCell>{user.reportsReceivedCount}</TableCell>
               <TableCell>
-                <button className="text-[1rem]" onClick={() => handleSelectUser(user as User)}>
+                <button className="text-[1rem]" onClick={() => handleSelectUser(user)}>
                   <LuSearch />
                 </button>
               </TableCell>
@@ -106,9 +103,7 @@ export function UsersPage() {
       <UserModal
         isOpen={isOpenUserModal}
         onClose={() => setIsOpenUserModal(false)} 
-        user={userSelected}
-        reports={userReports}
-        isLoading={isLoadingUserReports}/>
+        user={userSelected!}/>
     </div>
   )
 }

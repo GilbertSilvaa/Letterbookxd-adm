@@ -1,5 +1,3 @@
-import { User, Report } from '@app/app/entities'
-import { reportService } from '@app/app/services/reportService'
 import { userService } from '@app/app/services/userService'
 import { TGetUsersDTO } from '@app/app/services/userService/getByNickname'
 import { useEffect, useState } from 'react'
@@ -10,14 +8,11 @@ export function useUsersController() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [userList, setUserList] = useState<TGetUsersDTO[]>([])
+  const [userSelected, setUserSelected] = useState<TGetUsersDTO>()
   const [isOpenUserModal, setIsOpenUserModal] = useState(false)
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
   const [searchText, setSeachText] = useState('')
-
-  const [isLoadingUserReports, setIsLoadingUserReports] = useState(false)
-  const [userSelected, setUserSelected] = useState<User>()
-  const [userReports, setUserReports] = useState<Report[]>([])
 
   async function getUsers(search?: string) {
     try {
@@ -43,28 +38,6 @@ export function useUsersController() {
     }
   }
   
-  async function getUserReports(userId: number) {
-    try {
-      setIsLoadingUserReports(true)
-
-      const { value, error, message } = await reportService.getByUser({
-        page: 0,
-        pageSize: 8,
-        userReportedId: userId
-      })
-
-      if (error) {
-        toast.error(message)
-        return
-      }
-
-      setUserReports(value.rows)
-    }
-    finally {
-      setIsLoadingUserReports(false)
-    }
-  }
-
   function handleSearchForm(text: string) {
     setSeachText(text)
 
@@ -74,10 +47,9 @@ export function useUsersController() {
     getUsers(text)
   }
 
-  function handleSelectUser(user: User) {
+  function handleSelectUser(user: TGetUsersDTO) {
     setUserSelected(user)
     setIsOpenUserModal(true)
-    getUserReports(user.id)
   }
 
   useEffect(() => {
@@ -94,8 +66,6 @@ export function useUsersController() {
     isOpenUserModal,
     userSelected,
     setIsOpenUserModal,
-    handleSelectUser,
-    isLoadingUserReports,
-    userReports
+    handleSelectUser
   }
 }
