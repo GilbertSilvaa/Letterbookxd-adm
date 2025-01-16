@@ -1,6 +1,4 @@
-import { FaSearch } from 'react-icons/fa'
-import { LuSearch } from 'react-icons/lu'
-import { useUsersController } from './useUsersController'
+import { UserModal } from '@app/view/components/userModal'
 import {
   Input,
   Pagination,
@@ -14,14 +12,14 @@ import {
   TableHeader,
   TableRow
 } from '@nextui-org/react'
-import { UserModal } from '@app/view/components/userModal'
+import { FaSearch } from 'react-icons/fa'
+import { LuSearch } from 'react-icons/lu'
+import { useUsersController } from './useUsersController'
 
 const COLLUNS = [
   'USUÁRIO',
   'EMAIL',
-  'QTDE REVIEWS',
   'QTDE DENÚNCIAS ENVIADAS',
-  'QTDE DENÚNCIAS APROVADAS',
   'QTDE DENÚNCIAS RECEBIDAS',
   ''
 ]
@@ -76,9 +74,7 @@ export function UsersPage() {
             <TableRow key={index}>
               <TableCell>{user.nickname}</TableCell>
               <TableCell>{user.email}</TableCell>
-              <TableCell>{user.reviewsCount}</TableCell>
               <TableCell>{user.reportsDoneCount}</TableCell>
-              <TableCell>{user.successfulReportsCount}</TableCell>
               <TableCell>{user.reportsReceivedCount}</TableCell>
               <TableCell>
                 <button className="text-[1rem]" onClick={() => handleSelectUser(user)}>

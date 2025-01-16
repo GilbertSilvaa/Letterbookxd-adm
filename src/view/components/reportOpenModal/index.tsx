@@ -1,4 +1,5 @@
 import { Report } from '@app/app/entities'
+import { EReportStatus } from '@app/app/enums'
 import {
   Button,
   Modal,
@@ -8,7 +9,6 @@ import {
   ModalHeader
 } from '@nextui-org/react'
 import { useReportOpenModalController } from './useReportOpenModalController'
-import { EReportStatus } from '@app/app/enums'
 
 type TReportOpenModalProps = {
   data?: Report
@@ -36,12 +36,12 @@ export function ReportOpenModal({ data, isOpen, onClose, onResolved }: TReportOp
           <ModalBody>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <strong>Denúncia (@{data?.user.nickname}): </strong>
+                <strong>Denúncia (@{data?.user?.nickname}): </strong>
                 <p className="ml-3 text-[#bbb]">{data?.reason}</p>
               </div>
 
               <div className="flex flex-col gap-2">
-                <strong>Comentário (@{data?.review.user.nickname}): </strong>
+                <strong>Comentário (@{data?.review?.user?.nickname}): </strong>
                 <p className="ml-3 text-[#bbb]">{data?.originalComment}</p>
               </div>
 

@@ -1,5 +1,4 @@
-import { LuRefreshCcw } from 'react-icons/lu'
-import { LuSearchCheck } from 'react-icons/lu'
+import { ReportOpenModal } from '@app/view/components/reportOpenModal'
 import {
   Pagination,
   Spinner,
@@ -10,7 +9,7 @@ import {
   TableHeader,
   TableRow
 } from '@nextui-org/react'
-import { ReportOpenModal } from '@app/view/components/reportOpenModal'
+import { LuRefreshCcw, LuSearchCheck } from 'react-icons/lu'
 import { useReportsOpenController } from './useReportsOpenController'
 
 const COLLUNS = [
@@ -58,11 +57,11 @@ export function ReportsOpenPage() {
           {reportOpenList.map((report, index) => (
             <TableRow key={index}>
               <TableCell>{report.id}</TableCell>
-              <TableCell>{report.user.nickname}</TableCell>
+              <TableCell>{report.user?.nickname}</TableCell>
               <TableCell className="max-w-[300px]">
                 <span className="line-clamp-1">{report.reason}</span>
               </TableCell>
-              <TableCell>{report.review.user.nickname}</TableCell>
+              <TableCell>{report.review?.user?.nickname}</TableCell>
               <TableCell>{new Date(report.creationDate).toLocaleDateString()}</TableCell>
               <TableCell>
                 <button className="text-[1rem]" onClick={() => handleSelectReport(report)}>

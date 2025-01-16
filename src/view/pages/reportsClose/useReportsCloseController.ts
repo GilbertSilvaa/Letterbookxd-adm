@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
 import { Report } from '@app/app/entities'
 import { reportService } from '@app/app/services/reportService'
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 export function useReportsCloseController() {
   const PAGESIZE = 10
