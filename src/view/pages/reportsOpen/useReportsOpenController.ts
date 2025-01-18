@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
 import { Report } from '@app/app/entities'
 import { reportService } from '@app/app/services/reportService'
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 export function useReportsOpenController() {
   const PAGESIZE = 10
@@ -19,7 +19,7 @@ export function useReportsOpenController() {
       setIsLoading(true)
       
       const { error, value, message } = await reportService.getOpened({ 
-        page: 0, 
+        page: currentPage,  
         pageSize: PAGESIZE, 
         sort: 'asc' 
       })
