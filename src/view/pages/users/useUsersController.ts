@@ -29,7 +29,7 @@ export function useUsersController() {
         toast.error(message)
         return
       }
-
+      
       setUserList(value.rows)
       setPageCount(Math.ceil(value.count / PAGESIZE))
     }
@@ -52,6 +52,11 @@ export function useUsersController() {
     setIsOpenUserModal(true)
   }
 
+  function handleCloseModal(hasChanges?: boolean) {
+    setIsOpenUserModal(false)
+    if (hasChanges) getUsers()
+  }
+
   useEffect(() => {
     getUsers()
   }, [currentPage])
@@ -65,7 +70,7 @@ export function useUsersController() {
     setCurrentPage,
     isOpenUserModal,
     userSelected,
-    setIsOpenUserModal,
-    handleSelectUser
+    handleSelectUser,
+    handleCloseModal
   }
 }

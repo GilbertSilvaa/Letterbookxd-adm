@@ -21,6 +21,7 @@ const COLLUNS = [
   'EMAIL',
   'QTDE DENÚNCIAS ENVIADAS',
   'QTDE DENÚNCIAS RECEBIDAS',
+  'STATUS',
   ''
 ]
 
@@ -35,9 +36,9 @@ export function UsersPage() {
     setCurrentPage,
     handleSearchForm,
     isOpenUserModal,
-    setIsOpenUserModal,
     userSelected,
-    handleSelectUser
+    handleSelectUser,
+    handleCloseModal
   } = useUsersController()
 
   return (
@@ -76,6 +77,10 @@ export function UsersPage() {
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.reportsDoneCount}</TableCell>
               <TableCell>{user.reportsReceivedCount}</TableCell>
+              <TableCell>{user.status === 'ACTIVE' 
+                  ? <span className="py-1 px-2 rounded-lg bg-green-700 font-semibold text-[12px]">ATIVO</span>
+                  : <span className="py-1 px-2 rounded-lg bg-red-700 font-semibold text-[12px]">INATIVO</span>}
+              </TableCell>
               <TableCell>
                 <button className="text-[1rem]" onClick={() => handleSelectUser(user)}>
                   <LuSearch />
@@ -98,7 +103,7 @@ export function UsersPage() {
 
       <UserModal
         isOpen={isOpenUserModal}
-        onClose={() => setIsOpenUserModal(false)} 
+        onClose={handleCloseModal} 
         user={userSelected!}/>
     </div>
   )

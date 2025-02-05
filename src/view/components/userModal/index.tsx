@@ -1,4 +1,5 @@
-import { FaAnglesUp, FaAnglesDown } from 'react-icons/fa6'
+import { EReportStatus } from '@app/app/enums'
+import { TGetUsersDTO } from '@app/app/services/userService/getByNickname'
 import {
   Button,
   Modal,
@@ -15,14 +16,13 @@ import {
   TableHeader,
   TableRow
 } from '@nextui-org/react'
+import { FaAnglesDown, FaAnglesUp } from 'react-icons/fa6'
 import { useUserModalController } from './useUserModalController'
-import { EReportStatus } from '@app/app/enums'
-import { TGetUsersDTO } from '@app/app/services/userService/getByNickname'
 
 type TUserModalProps = {
   user: TGetUsersDTO
   isOpen: boolean
-  onClose: () => void
+  onClose: (hasChanges?: boolean) => void
 }
 
 export function UserModal({ user, isOpen, onClose }: TUserModalProps) {
@@ -31,8 +31,9 @@ export function UserModal({ user, isOpen, onClose }: TUserModalProps) {
     reportList,
     isLoading,
     pageCount,
-    setCurrentPage
-  } = useUserModalController({ user })
+    setCurrentPage,
+    handleBanOrUnbanUser
+  } = useUserModalController({ user, onClose })
 
   return (
     <Modal
@@ -87,7 +88,7 @@ export function UserModal({ user, isOpen, onClose }: TUserModalProps) {
 
                 <TableBody
                   emptyContent="Sem registros"
-                  isLoading={isLoading}
+                  isLoading={isLoading.reportList}
                   loadingContent={<Spinner label="Carregando..." />}>
                   {reportList?.map((report, index) => (
                     <TableRow key={index}>
@@ -127,10 +128,11 @@ export function UserModal({ user, isOpen, onClose }: TUserModalProps) {
         </ModalBody>
         <ModalFooter className="mt-4">
           <Button
-            type="submit"
-            color="danger"
-            isLoading={false}>
-            Desativar Usuário
+            type="button"
+            color={ user?.status === 'ACTIVE' ? 'danger' : 'primary' }
+            isLoading={isLoading.userBanned}
+            onPress={handleBanOrUnbanUser}>
+            { user?.status === 'ACTIVE' ? 'Desativar Usuário' : 'Reativar Usuário' }
           </Button>
         </ModalFooter>
       </ModalContent>
